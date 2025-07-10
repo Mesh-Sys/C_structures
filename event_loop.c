@@ -12,8 +12,10 @@ void sub(){
 }
 
 void do_add(){
+	printf("do_add - First yield - queue_size: %d\n", event_loop->_event_queue->_queue_size);
 	yield_coroutine(event_loop);
 	int count = 2;
+	printf("do_add - Second yield - queue_size: %d\n", event_loop->_event_queue->_queue_size);
 	yield_coroutine(event_loop);
 	for(int i = 0;i < count;i++){
 		await_coroutine(event_loop, add);

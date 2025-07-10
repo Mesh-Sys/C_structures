@@ -85,12 +85,14 @@ struct event_loop_t {
 static inline void schedule_coroutine(struct event_loop_t *ev_loop, struct coroutine_t *coroutine, void (*func)());
 
 void run_event_loop(struct event_loop_t *ev_loop){
+	printf("run_event_loop - Starting event loop - queue_size: %d\n", ev_loop->_event_queue->_queue_size);
 	while(!_queue_empty(ev_loop->_event_queue)){
 		ev_loop->_coroutine = _queue_get(ev_loop->_event_queue);
+		printf("run_event_loop - Running new coroutine - queue_size: %d\n", ev_loop->_event_queue->_queue_size);
 		ev_loop->_coroutine_finished = 0;
 		swapcontext(ev_loop->_main_ctx, ev_loop->_coroutine->_ctx);
-		printf("run_event_loop - Stopped coroutine - %d\n", ev_loop->_coroutine_finished);
 		if(!ev_loop->_coroutine_finished){schedule_coroutine(ev_loop, (void*)ev_loop->_coroutine, NULL);}
+		printf("run_event_loop - Stopped coroutine - is_finished: %d - queue_size: %d\n", ev_loop->_coroutine_finished, ev_loop->_event_queue->_queue_size);
 	}
 }
 
@@ -103,7 +105,7 @@ void _destroy_coroutine(struct event_loop_t *ev_loop){
 			ev_loop->_coroutine = NULL;
 		}
 		ev_loop->_coroutine_finished = 1;
-		printf("_destroy_coroutine - Exited coroutine - %d\n", ev_loop->_coroutine_finished);
+		printf("_destroy_coroutine - Exited coroutine - %d - queue_size: %d\n", ev_loop->_coroutine_finished, ev_loop->_event_queue->_queue_size);
 		swapcontext(ev_loop->_destroy_coroutine_ctx, ev_loop->_main_ctx);
 	}
 }
@@ -119,16 +121,18 @@ static inline void schedule_coroutine(struct event_loop_t *ev_loop, struct corou
 		coroutine->_ctx->uc_link = ev_loop->_destroy_coroutine_ctx;
 		makecontext(coroutine->_ctx, func, 0);
 	}
+	printf("schedule_coroutine - Scheduled coroutine\n");
 	_queue_put(ev_loop->_event_queue, (void*)coroutine);
 }
 
 static inline void await_coroutine(struct event_loop_t *ev_loop, void (*func)()){
+	printf("await_coroutine - Awaiting coroutine - queue_size: %d\n", ev_loop->_event_queue->_queue_size);
 	schedule_coroutine(ev_loop, NULL, func);
 	swapcontext(ev_loop->_coroutine->_ctx, ev_loop->_main_ctx);
 }
 
 static inline void yield_coroutine(struct event_loop_t *ev_loop){
-	schedule_coroutine(ev_loop, ev_loop->_coroutine, NULL);
+	printf("yield_coroutine - Yielded coroutine - queue_size: %d\n", ev_loop->_event_queue->_queue_size);
 	swapcontext(ev_loop->_coroutine->_ctx, ev_loop->_main_ctx);
 }
 

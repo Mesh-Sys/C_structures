@@ -1,0 +1,61 @@
+main - Created event loop - 0x55de54c992a0
+schedule_coroutine - Scheduled coroutine
+schedule_coroutine - Scheduled coroutine
+main - Starting event loop
+run_event_loop - Starting event loop - queue_size: 2
+run_event_loop - Running new coroutine - queue_size: 1
+do_add - First yield - queue_size: 1
+yield_coroutine - Yielded coroutine - queue_size: 1
+schedule_coroutine - Scheduled coroutine
+run_event_loop - Stopped coroutine - is_finished: 0 - queue_size: 2
+run_event_loop - Running new coroutine - queue_size: 1
+await_coroutine - Awaiting coroutine - queue_size: 1
+schedule_coroutine - Scheduled coroutine
+schedule_coroutine - Scheduled coroutine
+run_event_loop - Stopped coroutine - is_finished: 0 - queue_size: 3
+run_event_loop - Running new coroutine - queue_size: 2
+do_add - Second yield - queue_size: 2
+yield_coroutine - Yielded coroutine - queue_size: 2
+schedule_coroutine - Scheduled coroutine
+run_event_loop - Stopped coroutine - is_finished: 0 - queue_size: 3
+run_event_loop - Running new coroutine - queue_size: 2
+sub
+_destroy_coroutine - Exited coroutine - 1 - queue_size: 2
+run_event_loop - Stopped coroutine - is_finished: 1 - queue_size: 2
+run_event_loop - Running new coroutine - queue_size: 1
+do_sub - -1
+await_coroutine - Awaiting coroutine - queue_size: 1
+schedule_coroutine - Scheduled coroutine
+schedule_coroutine - Scheduled coroutine
+run_event_loop - Stopped coroutine - is_finished: 0 - queue_size: 3
+run_event_loop - Running new coroutine - queue_size: 2
+await_coroutine - Awaiting coroutine - queue_size: 2
+schedule_coroutine - Scheduled coroutine
+schedule_coroutine - Scheduled coroutine
+run_event_loop - Stopped coroutine - is_finished: 0 - queue_size: 4
+run_event_loop - Running new coroutine - queue_size: 3
+sub
+_destroy_coroutine - Exited coroutine - 1 - queue_size: 3
+run_event_loop - Stopped coroutine - is_finished: 1 - queue_size: 3
+run_event_loop - Running new coroutine - queue_size: 2
+do_sub - -1
+_destroy_coroutine - Exited coroutine - 1 - queue_size: 2
+run_event_loop - Stopped coroutine - is_finished: 1 - queue_size: 2
+run_event_loop - Running new coroutine - queue_size: 1
+add
+_destroy_coroutine - Exited coroutine - 1 - queue_size: 1
+run_event_loop - Stopped coroutine - is_finished: 1 - queue_size: 1
+run_event_loop - Running new coroutine - queue_size: 0
+do_add - 1
+await_coroutine - Awaiting coroutine - queue_size: 0
+schedule_coroutine - Scheduled coroutine
+schedule_coroutine - Scheduled coroutine
+run_event_loop - Stopped coroutine - is_finished: 0 - queue_size: 2
+run_event_loop - Running new coroutine - queue_size: 1
+add
+_destroy_coroutine - Exited coroutine - 1 - queue_size: 1
+run_event_loop - Stopped coroutine - is_finished: 1 - queue_size: 1
+run_event_loop - Running new coroutine - queue_size: 0
+do_add - 3
+_destroy_coroutine - Exited coroutine - 1 - queue_size: 0
+run_event_loop - Stopped coroutine - is_finished: 1 - queue_size: 0

@@ -5,10 +5,14 @@ struct event_loop_t *event_loop;
 
 void add(va_list *args){
 	printf("add\n");
+	int *a = va_arg(*args, int*);
+	*a += va_arg(*args, int);
 }
 
 void sub(va_list *args){
 	printf("sub\n");
+	int *a = va_arg(*args, int*);
+	*a -= va_arg(*args, int);
 }
 
 void do_add(va_list *args){
@@ -18,16 +22,22 @@ void do_add(va_list *args){
 	//printf("do_add - Second yield - queue_size: %d\n", event_loop->_event_queue->_queue_size);
 	//yield_coroutine(event_loop);
 	for(int i = 0;i < count;i++){
-		await_coroutine(event_loop, add, 0);
-		printf("do_add - %d\n", i + i + 1);
+		int *a = (int*)malloc(sizeof(int));
+		*a = -1;
+		await_coroutine(event_loop, add, 2, a, i);
+		printf("do_add - %d\n", *a);
+		free(a);
 	}
 }
 
 void do_sub(va_list *args){
 	int count = 2;
 	for(int i = 0;i < count;i++){
-		await_coroutine(event_loop, sub, 0);
-		printf("do_sub - %d\n", i - i - 1);
+		int *a = (int*)malloc(sizeof(int)); 
+		*a = -1;
+		await_coroutine(event_loop, sub, 2, a, i);
+		printf("do_sub - %d\n", *a);
+		free(a);
 	}
 }
 
